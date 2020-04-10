@@ -1,0 +1,9 @@
+*.xlsx
+__pycache__/*
+*/__pycache__/*
+*/.idea/
+.idea/*
+*.pyc
+migrations/
+*/node_modules/
+node_modules/
