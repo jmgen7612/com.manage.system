@@ -52,6 +52,10 @@
                                 password: that.password
                             })
                             .then(function (response) {
+                                // 这里服务器返回的 response 为一个 json object，可通过如下方法需要转成 json 字符串
+                                // 可以直接通过 response.log 取key-value
+                                // 坑一：这里不能直接使用 this 指针，不然找不到对象
+                                // 坑二：这里直接按类型解析，若再通过 JSON.stringify(msg) 转，会得到带双引号的字串
                                 if (parseInt(response.data.code) === 400) {
                                     // 登录失败
                                     that.username = '';
@@ -63,7 +67,6 @@
                                     localStorage.setItem('username', response.data.username);
                                     localStorage.setItem('gravatar', response.data.gravatar);
                                     message.success('登录成功');
-                                    console.log(response.data.gravatar);
                                     that.$router.push('/')
                                 }
                                 else if (parseInt(response.data.code) === 20001) {

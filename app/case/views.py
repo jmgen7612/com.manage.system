@@ -21,18 +21,18 @@ from ..models import TestPlan
 def uploadcase():
     datafile = request.files['file']
     namelist = request.form['name'].split('_')
-    caseversion_name = namelist[1]
-    project_name = namelist[2].split('.')[0]
-    # 获取文件内容
-    f = datafile.read()
-    # 指定文件内容
-    workbook = xlrd.open_workbook(file_contents=f)
-    Data_sheet = workbook.sheets()[0]
-    rowNum = Data_sheet.nrows  # sheet行数
-    row_data0 = Data_sheet.row_values(0)
-    row_list = []
     # 校验上传的excel文件名称是否符合规范
-    if (caseversion_name is not None and project_name is not None):
+    if (namelist is not None and datafile is not None and len(namelist)>=3):
+        caseversion_name = namelist[1]
+        project_name = namelist[2].split('.')[0]
+        # 获取文件内容
+        f = datafile.read()
+        # 指定文件内容
+        workbook = xlrd.open_workbook(file_contents=f)
+        Data_sheet = workbook.sheets()[0]
+        rowNum = Data_sheet.nrows  # sheet行数
+        row_data0 = Data_sheet.row_values(0)
+        row_list = []
         name = Project.query.filter_by(name=project_name).first()
         project = Project(name=project_name)
         # 如果项目名称不存在，则添加新的项目

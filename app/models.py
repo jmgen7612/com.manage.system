@@ -10,7 +10,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import db
 
-
 class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -199,7 +198,6 @@ class CaseResult(db.Model):
             'testtime': self.testtime,
         }
         return result_dic
-
 
 # 测试计划表
 class TestPlan(db.Model):

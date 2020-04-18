@@ -11,7 +11,9 @@ from . import auth
 from .. import db
 from ..models import User
 from .forms import RegistrationForm
+from ..log.logger import Logger
 
+log = Logger(name=__file__).get_logger()
 @auth.route("/login",methods=['POST'])
 def login():
     username = request.json.get('username')
@@ -24,6 +26,7 @@ def login():
         if user is not None and user.verify_password(password):
             token = hashlib.md5(username.encode("utf-8")).hexdigest()
             gravatar=user.gravatar()
+            log.info(username + '登录成功')
             return jsonify({'code': 200, 'msg': 'ok', 'token': token, 'username': username, 'gravatar': gravatar})
         else:
             return jsonify({'code': 20001, 'msg': '账号或密码错误，请输入正确的账号密码'})
@@ -41,6 +44,7 @@ def register():
                         avatar_hash=avatar_hash)
             db.session.add(user)
             db.session.commit()
+            log.warning(username + '注册成功')
             return jsonify({'code': 200})
     else:
         return jsonify({'code': 20005 , 'msg': '用户名或邮箱已存在，请重新输入'})

@@ -224,6 +224,7 @@
                 that.model = '';
                 that.j = 0;
                 if (val.length !== 0) {
+                    that.isshow = false;
                     for (let i = 0; i < that.models.length; i++) {
                         if (that.models[i][1] === that.caseversion[1] && that.models[i][2] === that.caseversion[2]) {
                             that.modelview[that.j] = that.models[i][0];
