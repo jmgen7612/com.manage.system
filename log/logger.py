@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#@file   :logger.py
-#@time   :2020/4/16 20:14
-#@Author :jmgen
-#@Version:1.0
-#@Desc   :
+# @file   :__init__.py
+# @time   :2020/4/13 15:16
+# @Author :jmgen
+# @Version:1.0
+# @Desc   :
+
 import logging
 import logging.handlers
 import os
@@ -80,6 +81,9 @@ class Logger:
 
     def log(self, msg, *args, **kwargs):
         self.logger.log(msg, *args, **kwargs)
+
+    def fatal(self, msg, *args, **kwargs):
+        self.logger.fatal(msg, *args, **kwargs)
 
     def get_logger(self):
         return self.logger

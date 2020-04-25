@@ -11,9 +11,11 @@ from . import auth
 from .. import db
 from ..models import User
 from .forms import RegistrationForm
-from ..log.logger import Logger
+from log.logger import Logger
+from log.influxdlog import Influxdblog
 
 log = Logger(name=__file__).get_logger()
+inflog=Influxdblog()
 @auth.route("/login",methods=['POST'])
 def login():
     username = request.json.get('username')
@@ -27,6 +29,7 @@ def login():
             token = hashlib.md5(username.encode("utf-8")).hexdigest()
             gravatar=user.gravatar()
             log.info(username + '登录成功')
+            # inflog.write_influxd(username+'登录成功')
             return jsonify({'code': 200, 'msg': 'ok', 'token': token, 'username': username, 'gravatar': gravatar})
         else:
             return jsonify({'code': 20001, 'msg': '账号或密码错误，请输入正确的账号密码'})
